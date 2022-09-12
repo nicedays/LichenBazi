@@ -1,0 +1,69 @@
+{
+	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "离尘八字"
+			}
+		},
+		{
+			"path": "pages/BaziLIst/index",
+			"style": {
+				"navigationBarTitleText": "uni-app"
+			}
+		}
+	    ,{
+            "path" : "pages/mine/mine",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "离尘八字",
+		"navigationBarBackgroundColor": "#F8F8F8",
+		"backgroundColor": "#F8F8F8"
+		
+	},
+	"uniIdRouter": {},
+	"tabBar": {
+	    "iconfontSrc":"static/font/iconfont.ttf",
+		"height":"40px",
+	    "list": [
+	      {
+	        "pagePath": "pages/index/index",
+	        "iconfont": {
+	          "text": "\ue9ce",
+	          "selectedText": "\ue9ce",
+			  "color": "#CCCCCC",
+			  "selectedColor": "#003366",
+	          "fontSize": "30px"
+	        }
+	      },
+		  {
+		    "pagePath": "pages/BaziLIst/index",
+		    "iconfont": {
+		      "text": "\ue646",
+		      "selectedText": "\ue646",
+			  "color": "#CCCCCC",
+			  "selectedColor": "#003366",
+		      "fontSize": "30px"
+		    }
+		  },
+		  {
+		    "pagePath": "pages/mine/mine",
+		    "iconfont": {
+		      "text": "\ue641",
+		      "selectedText": "\ue641",
+		  			  "color": "#CCCCCC",
+		  			  "selectedColor": "#003366",
+		      "fontSize": "28px"
+		    }
+		  }
+	    ]
+	  }
+}

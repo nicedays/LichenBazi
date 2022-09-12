@@ -1,0 +1,23 @@
+{
+  "name": "lichenbazi",
+  "version": "1.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nicedays/LichenBazi.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nicedays/LichenBazi/issues"
+  },
+  "homepage": "https://github.com/nicedays/LichenBazi#readme",
+  "dependencies": {
+    "lunar-javascript": "^1.2.33"
+  }
+}
