@@ -13,14 +13,24 @@
 			}
 		}
 	    ,{
-            "path" : "pages/mine/mine",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "",
-                "enablePullDownRefresh": false
-            }
-            
-        }
+	        "path" : "pages/mine/mine",
+	        "style" :                                                                                    
+	        {
+	            "navigationBarTitleText": "",
+	            "enablePullDownRefresh": false
+	        }
+	        
+	    }
+		,{
+		    "path" : "pages/huangLi/huangLi",
+		    "style" :                                                                                    
+		    {
+		        "app-plus": { //app配置自定义导航
+		                        "titleNView": false //app禁止使用原神导航
+		                    }
+		    }
+		    
+		}
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",

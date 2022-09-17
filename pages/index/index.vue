@@ -1,8 +1,13 @@
 <template>
 	<view class="content">
-		
+
 		<view class="text-area">
-			<uni-calendar class="uni-calendar--hook" :selected="info.selected" :showMonth="false" @change="change" @monthSwitch="monthSwitch" />
+			<uni-calendar class="uni-calendar--hook" :selected="info.selected" :showMonth="false" @change="change"
+				@monthSwitch="monthSwitch" />
+			<view class="nongli" @tap="goHuangli">
+				<view>农历{{lunarInfo.today}}</view>
+				<view class="ganzhi">{{lunarInfo.ganzhi}}</view>
+			</view>
 		</view>
 	</view>
 </template>
@@ -33,11 +38,21 @@
 			day: dd.getDay()
 		}
 	}
+	import {
+		Solar,
+		Lunar,
+		HolidayUtil
+	} from 'lunar-javascript'
 	export default {
 		components: {},
 		data() {
 			return {
 				showCalendar: false,
+				lunarInfo: { //当日信息
+					today: '',
+					ganzhi: '',
+					time:''
+				},
 				info: {
 					lunar: true,
 					range: true,
@@ -48,53 +63,77 @@
 		},
 		onReady() {
 			this.$nextTick(() => {
-				this.showCalendar = true
+				this.showCalendar = true,
+					this.getTodayInfo(new Date())
 			})
 			// TODO 模拟请求异步同步数据
 			setTimeout(() => {
-				this.info.date = getDate(new Date(),-30).fullDate
-				this.info.startDate = getDate(new Date(),-60).fullDate
-				this.info.endDate =  getDate(new Date(),30).fullDate
+				this.info.date = getDate(new Date(), -30).fullDate
+				this.info.startDate = getDate(new Date(), -60).fullDate
+				this.info.endDate = getDate(new Date(), 30).fullDate
 				this.info.selected = [{
-						date: getDate(new Date(),-3).fullDate,
+						date: getDate(new Date(), -3).fullDate,
 						info: '打卡'
 					},
 					{
-						date: getDate(new Date(),-2).fullDate,
+						date: getDate(new Date(), -2).fullDate,
 						info: '',
 						data: {
 							custom: '自定义信息',
 							name: '自定义消息头'
+
 						}
 					},
 					{
-						date: getDate(new Date(),-1).fullDate,
+						date: getDate(new Date(), -1).fullDate,
 						info: '已打卡'
 					}
 				]
 			}, 2000)
 		},
 		methods: {
+			// 跳转黄历页面
+			goHuangli() {
+				
+				uni.navigateTo({
+					url: "/pages/huangLi/huangLi?time="+this.lunarInfo.time
+				})
+			},
 			open() {
 				this.$refs.calendar.open()
 			},
-			close(){
+			close() {
 				console.log('弹窗关闭');
 			},
 			change(e) {
 				console.log('change 返回:', e)
 				// 模拟动态打卡
-				if (this.info.selected.length > 5) return
-				this.info.selected.push({
-					date: e.fulldate,
-					info: '打卡'
-				})
+				// if (this.info.selected.length > 5) return
+				// this.info.selected.push({
+				// 	date: e.fulldate,
+				// 	info: '打卡'
+				// })
+				// debugger
+				// this.lunarInfo.today=e.lunar.IMonthCn+e.lunar.IDayCn
+				
+				
+				this.getTodayInfo(e.fulldate)
+
 			},
-			confirm(e) {
-				console.log('confirm 返回:', e)
+			// 获取当天农历信息和生日信息
+			getTodayInfo(e) {
+				let today = Lunar.fromDate(new Date(e));
+				this.lunarInfo.time=new Date(e).getTime()
+				this.lunarInfo.today = today.getMonthInChinese() + today.getDayInChinese()
+				this.lunarInfo.ganzhi = today.getYearInGanZhi() + today.getYearShengXiao() + "年 " + today
+				.getMonthInGanZhi() + "月 " + today.getDayInGanZhi() + "日"
+				// debugger
 			},
 			monthSwitch(e) {
-				console.log('monthSwitchs 返回:', e)
+				// console.log('monthSwitchs 返回:', e)
+				// const {Solar, Lunar, HolidayUtil} = require('lunar-javascript')
+				// console.log(Lunar.fromDate(new Date()).toFullString())
+				// console.log(Solar.fromYmd(2016, 1, 1).toFullString())
 			}
 		}
 	}
@@ -108,17 +147,19 @@
 		justify-content: center;
 	}
 
-	.logo {
-		height: 200rpx;
-		width: 200rpx;
-		margin-top: 200rpx;
-		margin-left: auto;
-		margin-right: auto;
-		margin-bottom: 50rpx;
-	}
+	.text-area {
+		.nongli {
+			padding: 10px;
+			background-color: #EEEEEE;
+			border-radius: 10px;
+			margin-top: 10px;
+			font-size: 14px;
+			color: #000;
 
-	.title {
-		font-size: 36rpx;
-		color: #8f8f94;
+			.ganzhi {
+				font-size: 12px;
+				color: #999;
+			}
+		}
 	}
 </style>
