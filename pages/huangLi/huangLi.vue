@@ -1,10 +1,10 @@
 <template>
 	<view class="top_main">
-		<view class="header">
+		<view class="header" :style="{top:titleBarHeight+statusBarHeight+'px'}">
 			<view class="goback" @tap="goBack">&#xe6ab;</view>
 			{{mainTime.getFullYear()+"年"+(mainTime.getMonth() + 1)+"月"+mainTime.getDate()+"日"}}
 		</view>
-		<view class="main_content">
+		<view class="main_content" :style="'margin-top:'+(titleBarHeight+statusBarHeight+50)+'px'">
 			<view class="top">
 				<view class="top_left">
 					<view class="day_yi">
@@ -61,6 +61,9 @@
 			this.mainTime = new Date(data)
 			this.init()
 		},
+		mounted() {
+			this.getHeight()
+		},
 		data() {
 			return {
 				mainTime: null,
@@ -71,6 +74,8 @@
 					today: '',
 					ganzhi: ''
 				},
+				titleBarHeight: 0, //顶部导航高度
+				statusBarHeight: 0,
 				shichen: [], //时辰
 				shichen2: [ //时间枚举
 					'0-1',
@@ -91,6 +96,32 @@
 			}
 		},
 		methods: {
+			getHeight() {
+
+				uni.getSystemInfo({ //获取系统信息
+					success: res => {
+						// #ifdef APP-PLUS
+						console.log('app-plus', res)
+						this.titleBarHeight = 0
+						this.statusBarHeight = res.statusBarHeight
+						// #endif
+
+
+						// #ifdef H5
+						this.titleBarHeight  = 0
+						this.statusBarHeight  = res.statusBarHeight
+						// #endif
+						// this.titleBarHeight = 0;
+						// //  状态栏（顶部）高度
+						// this.statusBarHeight = res.statusBarHeight + 50
+					},
+					fail(err) {
+						console.log(err);
+					}
+				})
+
+
+			},
 			goBack() {
 				uni.switchTab({
 					url: "/pages/index/index"
@@ -126,21 +157,23 @@
 		font-family: 'iconfont';
 		src: url('../../static/font/iconfont.ttf')
 	}
-.top_main::-webkit-scrollbar {
+
+	.top_main::-webkit-scrollbar {
 
 		width: 0;
 		height: 0;
 		color: transparent;
 
 	}
-	.top_main{
+
+	.top_main {
 		position: absolute;
 	}
+
 	.header {
 		position: fixed;
 		width: 100%;
 		height: 50px;
-		top: 0;
 		left: 0;
 		background-color: #FFF;
 		text-align: center;
@@ -164,12 +197,11 @@
 		}
 	}
 
-	
+
 
 	.main_content {
 		border-radius: 20px;
 		border: 2px solid #bb9469;
-		margin-top: 50px;
 		margin-left: 10px;
 		margin-right: 10px;
 		margin-bottom: 20px;
@@ -213,6 +245,7 @@
 					margin-top: 20px;
 					position: relative;
 					margin-bottom: 10px;
+
 					.ji_cion {
 						position: absolute;
 						left: -24px;
@@ -261,9 +294,11 @@
 		.bottom {
 			width: 100%;
 			height: 60%;
-			.shichen:first-child{
-				border-left: 0px!important;
+
+			.shichen:first-child {
+				border-left: 0px !important;
 			}
+
 			.shichen {
 				display: flex;
 
