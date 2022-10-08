@@ -51,7 +51,7 @@
 	          "selectedText": "\ue9ce",
 			  "color": "#CCCCCC",
 			  "selectedColor": "#003366",
-	          "fontSize": "30px"
+	          "fontSize": "25px"
 	        }
 	      },
 		  {
@@ -61,7 +61,7 @@
 		      "selectedText": "\ue646",
 			  "color": "#CCCCCC",
 			  "selectedColor": "#003366",
-		      "fontSize": "30px"
+		      "fontSize": "25px"
 		    }
 		  },
 		  {
@@ -71,7 +71,7 @@
 		      "selectedText": "\ue641",
 		  			  "color": "#CCCCCC",
 		  			  "selectedColor": "#003366",
-		      "fontSize": "28px"
+		      "fontSize": "25px"
 		    }
 		  }
 	    ]

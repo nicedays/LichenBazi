@@ -29,7 +29,7 @@ let sqlite = {
 			plus.sqlite.executeSql({ //executeSql 执行增删改等操作的SQL语句
 				name: dbName,
 				sql: "create table if not exists lichen_BaZi (\n" +
-					"id                   INT not null,\n" +
+					"id                   INTEGER PRIMARY KEY,\n" +
 					"rank                 INT,\n" +
 					"relation             VARCHAR(50),\n" +
 					"name                 VARCHAR(50),\n" +
@@ -37,7 +37,7 @@ let sqlite = {
 					"birthday             VARCHAR(30),\n" +
 					"isLunar              VARCHAR(1)                      default '0',\n" +
 					"isAccurate           VARCHAR(50),\n" +
-					"idLeapMonth          VARCHAR(1)                      default '0',\n" +
+					"isLeapMonth          VARCHAR(1)                      default '0',\n" +
 					"province             VARCHAR(30),\n" +
 					"provinseCode         VARCHAR(20),\n" +
 					"city                 VARCHAR(30),\n" +
@@ -45,8 +45,7 @@ let sqlite = {
 					"remarks              LONG VARCHAR,\n" +
 					"analyse              LONG VARCHAR,\n" +
 					"addTime              VARCHAR(30),\n" +
-					"tag                  VARCHAR(50),\n" +
-					"primary key (id)\n" +
+					"tag                  VARCHAR(50)\n" +
 					");",
 
 				// "create table if not exists lichen_Experience (\n" +
@@ -200,7 +199,7 @@ let sqlite = {
 						let addTime = item.addTime || "";
 						let tag = item.tag || "";
 						let sql =
-							"insert into lichen_BaZi(rank,relation,name,sex,birthday,isLunar,isAccurate,isAccurate,isLeapMonth,province,provinseCode,city,cityCode,remarks,analyse,addTime,tag) " +
+							"insert into lichen_BaZi('rank','relation','name','sex','birthday','isLunar','isAccurate','isLeapMonth','province','provinseCode','city','cityCode','remarks','analyse','addTime','tag') " +
 							'values(' +
 							rank +
 							',"' +
@@ -213,8 +212,6 @@ let sqlite = {
 							birthday +
 							'","' +
 							isLunar +
-							'","' +
-							isAccurate +
 							'","' +
 							isAccurate +
 							'","' +
@@ -245,7 +242,7 @@ let sqlite = {
 								resolve(true)
 							},
 							fail: (e) => {
-
+								console.log(e)
 								this.showToast("新增数据失败");
 								reject(false)
 							}
@@ -342,7 +339,7 @@ let sqlite = {
 	deleteTable() {
 		let sql = `DROP TABLE IF EXISTS lichen_BaZi`;
 		plus.sqlite.executeSql({
-			name: this.dbName,
+			name: dbName,
 			sql: sql,
 			success: (e) => {
 				this.showToast("删除表成功");

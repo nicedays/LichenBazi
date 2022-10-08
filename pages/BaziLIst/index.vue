@@ -1,11 +1,16 @@
 <template>
-	<div>
+	<div class="sqlite">
 		<div @click="open">open</div>
 		<div @click="close">close</div>
 		<div @click="create">create</div>
 		<div @click="deleteTable">deleteTable</div>
 		<div @click="selectAll">selectAll</div>
 		<div @click="addBazi">add1</div>
+	</div>
+	<div class="bazi_list">
+		<div v-for="(item,index) in baziList" :key="index" >
+			{{item.name}}
+		</div>
 	</div>
 </template>
 
@@ -22,7 +27,8 @@
 			return {
 				myDB: null,
 				isOpen: false,
-				success: ""
+				success: "",
+				baziList:[]
 			}
 		},
 		methods: {
@@ -37,6 +43,7 @@
 			},
 			async selectAll() {
 				let a = await sqlite.selectAllBazi()
+				this.baziList=a
 				console.log("111", a)
 			},
 			async addBazi() {
@@ -69,5 +76,19 @@
 </script>
 
 <style scoped lang="scss">
-
+.sqlite{
+	position: absolute;
+	opacity: 0.5;
+	right: 0;
+	div{
+		padding: 10px;
+		border-radius: 10px;
+		background-color: aliceblue;
+	}
+}
+.bazi_list{
+	width: 100%;
+	height: 100%;
+	overflow-y: scroll;
+}
 </style>
