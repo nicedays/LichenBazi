@@ -8,8 +8,9 @@
 		<div @click="addBazi">add1</div>
 	</div>
 	<div class="bazi_list">
-		<div v-for="(item,index) in baziList" :key="index" >
-			{{item.name}}
+		<div class="bazi_item" v-for="(item,index) in baziList" :key="index" >
+			<div class="item_name">{{item.name}}</div>
+			<div class="birth">{{getBirth(index)}}</div>
 		</div>
 	</div>
 </template>
@@ -32,6 +33,18 @@
 			}
 		},
 		methods: {
+			getBirth(index){
+				console.log(this.baziList[index].isLunar)
+				if(this.baziList[index].isLunar==="0"){
+					let time=new Date(this.baziList[index].birthday)
+					let hours= time.getHours()<10?'0'+time.getHours():time.getHours()
+					let Minute=time.getMinutes()<10?'0'+time.getMinutes():time.getMinutes()
+					return "新历"+time.getFullYear()+"年"+time.getMonth()+'月'+time.getDay()+'日 '+hours+':'+Minute
+				
+				}else if(this.baziList[index].isLunar==="1"){
+					
+				}
+			},
 			open() {
 				sqlite.openSQL();
 			},
@@ -53,7 +66,7 @@
 					name: "张三",
 					sex: 1,
 					birthday: "2022 9-27",
-					isLunar : 1,
+					isLunar : "0",
 					isAccurate: "是",
 					isLeapMonth: "1",
 					province: '广东',
@@ -90,5 +103,27 @@
 	width: 100%;
 	height: 100%;
 	overflow-y: scroll;
+	
+	.bazi_item{
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-top: 10px;
+		height: 80px;
+		border-radius: 10px;
+		border: 1px solid #bb9469;
+		background-color: #bc91661a;
+		.item_name{
+			font-size: 18px;
+			margin-left: 10px;
+			color: #000000;
+			margin-top: 5px;
+		}
+		.birth{
+			font-size: 14px;
+			margin-left: 10px;
+			color: #bbbbbb;
+			margin-top: 5px;
+		}
+	}
 }
 </style>
